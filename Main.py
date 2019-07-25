@@ -3,30 +3,9 @@ import random
 import pandas
 
 # r matrix
-'''
-R = np.matrix([[-1,-1,-1,-1,0,-1],
-               [-1,-1,-1,0,-1,100],
-               [-1,-1,-1,0,-1,-1],
-               [-1,0,0,-1,0,-1],
-               [0,-1,-1,0,-1,100],
-               [-1,0,-1,-1,0,100]])
-
+# read the matrix form the appropriate folder
 d = pandas.read_csv("C:\\R tables\\0.csv",header = None,index_col=None)
 R = np.asarray(d)
-print(R)
-'''
-R = np.matrix([[-1,0,-1,-1,-1,-1,0,-1,-1,-1,-1],
-	           [0,-1,0,0,-1,0,-1,0,-1,-1,-1],
-	           [-1,0,-1,-1,0,-1,-1,-1,-1,-1,-1],
-	           [-1,0,-1,-1,-1,-1,-1,-1,-1,100,-1],
-	           [-1,-1,0,-1,-1,0,-1,-1,-1,-1,-1],
-	           [-1,0,-1,-1,0,-1,0,-1,-1,-1,-1],
-               [0,-1,-1,-1,-1,0,-1,0,-1,-1,-1],
-	           [-1,0,-1,-1,-1,-1,0,-1,0,-1,-1],
-               [-1,-1,-1,-1,-1,-1,-1,0,-1,100,-1],
-               [-1,-1,-1,0,-1,-1,-1,-1,0,100,0],
-               [-1,-1,-1,-1,-1,-1,-1,-1,-1,100,-1]
-		])
 
 # Q Matrix
 Q = np.matrix(np.zeros([11,11]))
@@ -35,7 +14,7 @@ Q = np.matrix(np.zeros([11,11]))
 gamma = 0.8
 
 # Intiial stage. (Usually to be choosen at random)
-fluffy = [0,1,2,3,4,5,6,7,8,9]
+avilable_states = [0,1,2,3,4,5,6,7,8,9,10]
 initial_state = random.choice(fluffy)
 
 
@@ -44,7 +23,7 @@ initial_state = random.choice(fluffy)
 # This function returns all avilable actions in the state given as argument
 def avilable_actions(state):
 	current_state_row = R[state,]
-	av_act = np.where(current_state_row >= 0)[1]
+	av_act = np.where(current_state_row >= 0)[0]
 	return av_act
 
 
@@ -102,13 +81,14 @@ print(Q)
 # Testing
 
 
-# Goal State = 5
-# Best sequence path strting from 2 -> 2,3,1,5
+# Goal State = 0
+# Best sequence path strting from 2 -> 2,1,0
 
 current_state = 0
 steps = [current_state]
-
-while current_state != 9:
+# cahnge the value depending upon the R matrix you are using
+#for instance for the 0.csv r matrix value in while will be 0 and 1 for 1.csv and so on...
+while current_state != 0:
 
 	next_step_index = np.where(Q[current_state,] == np.max(Q[current_state,]))[1]
 
@@ -124,4 +104,5 @@ while current_state != 9:
 # Print	selected sequence of steps
 print("Selected path : ")
 print(steps)
+# save the Q matrix generated corrosponding to R matrix as a .csv file
 pandas.DataFrame(Q).to_csv("C:\\Q table\\Qtable(9).csv",header = None,index = None)
