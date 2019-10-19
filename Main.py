@@ -15,7 +15,7 @@ gamma = 0.8
 
 # Intiial stage. (Usually to be choosen at random)
 avilable_states = [0,1,2,3,4,5,6,7,8,9,10]
-initial_state = random.choice(fluffy)
+initial_state = random.choice(avilable_states)
 
 
 
@@ -84,7 +84,7 @@ print(Q)
 # Goal State = 0
 # Best sequence path strting from 2 -> 2,1,0
 
-current_state = 0
+current_state = 2
 steps = [current_state]
 # cahnge the value depending upon the R matrix you are using
 #for instance for the 0.csv r matrix value in while will be 0 and 1 for 1.csv and so on...
